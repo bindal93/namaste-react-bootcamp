@@ -10,4 +10,12 @@ const CardComponent = ({ restraunt }) => {
   );
 };
 
+export const BeautifulCardComponent = () => {
+  return (
+    <div className="style-container">
+      <CardComponent />
+    </div>
+  );
+};
+
 export default CardComponent;
