@@ -1,14 +1,14 @@
 import { useState } from "react";
 import data from "./data.json";
 
-const searchRestaurants = (searchText) => {
+const searchRestaurants = (searchText, listOfRestaurants) => {
   // Logic for searching inside data
-  return data.filter((res) =>
-    res.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
+  return listOfRestaurants.filter((res) =>
+    res.data.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
   );
 };
 
-const SearchBar = ({ setFilteredRestaurants }) => {
+const SearchBar = ({ setFilteredRestaurants, listOfRestaurants }) => {
   //const searchText = "Search";
   const [searchText, setSearchText] = useState("Hello");
 
@@ -17,9 +17,12 @@ const SearchBar = ({ setFilteredRestaurants }) => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          const filtertedRestaurants = searchRestaurants(searchText);
-          console.log(filtertedRestaurants);
-          setFilteredRestaurants(filtertedRestaurants);
+          const filtertedList = searchRestaurants(
+            searchText,
+            listOfRestaurants
+          );
+          console.log(filtertedList);
+          setFilteredRestaurants(filtertedList);
         }}
       >
         <input

@@ -5,6 +5,7 @@ import data from "./data.json";
 import { title } from "./constants.js";
 import SearchBar from "./SearchBar.js";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const HeadingComponent = () => (
   <div id="title" className="title-class" tabIndex="1">
@@ -14,17 +15,46 @@ const HeadingComponent = () => (
 
 // Dealing with Arrays, using a map
 const CardContainer = ({ filtertedRestaurants }) =>
-  filtertedRestaurants.map((restaurant) => (
-    <CardComponent restraunt={restaurant} key={restaurant.id} />
-  ));
+  !filtertedRestaurants.length ? (
+    <h1 key="sfds">No restaurant found!</h1>
+  ) : (
+    filtertedRestaurants.map((restaurant) => {
+      console.log(restaurant.data?.id);
+      return (
+        <CardComponent restraunt={restaurant} key={restaurant?.data?.id} />
+      );
+    })
+  );
 
 const BodyComponent = () => {
-  const [filtertedRestaurants, setFilteredRestaurants] = useState(data);
+  const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [filtertedRestaurants, setFilteredRestaurants] = useState([]);
+
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
+
+  async function fetchRestaurants() {
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.29844139999999&lng=77.99313599999999&page_type=DESKTOP_WEB_LISTING"
+    );
+    const json = await data.json();
+
+    console.log(json.data.cards[2].data.data.cards);
+    setListOfRestaurants(json.data.cards[2].data.data.cards);
+  }
 
   return (
     <div className="card-container">
-      <SearchBar setFilteredRestaurants={setFilteredRestaurants} />
-      <CardContainer filtertedRestaurants={filtertedRestaurants} />
+      <SearchBar
+        listOfRestaurants={listOfRestaurants}
+        setFilteredRestaurants={setFilteredRestaurants}
+      />
+      <CardContainer
+        filtertedRestaurants={
+          filtertedRestaurants.length ? filtertedRestaurants : listOfRestaurants
+        }
+      />
     </div>
   );
 };
@@ -32,7 +62,7 @@ const BodyComponent = () => {
 const AppLayout = () => (
   <>
     <HeadingComponent />
-    <BodyComponent />
+    {new Date().getHours() < 22 && <BodyComponent />}
   </>
 );
 
