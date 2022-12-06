@@ -1,11 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import CardComponent from "./CardComponent.js";
-import data from "./data.json";
-import { title } from "./constants.js";
-import SearchBar from "./SearchBar.js";
+import CardComponent from "./components/CardComponent.js";
+import data from "./utils/data.json";
+import { title } from "./utils/constants.js";
+import SearchBar from "./components/SearchBar.js";
 import { useState, useEffect } from "react";
-import NoResultsComponent from "./NoResultsComponent.js";
+import NoResultsComponent from "./components/NoResultsComponent.js";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  Link,
+} from "react-router-dom";
+import AboutUs from "./components/AboutUs.js";
+import ErrorComponent from "./components/ErrorComponent.js";
+import RestaurantComponent from "./components/RestaurantComponent.js";
 
 const HeadingComponent = () => (
   <div id="title" className="title-class" tabIndex="1">
@@ -19,11 +28,13 @@ const CardContainer = ({ filtertedRestaurants }) =>
     <NoResultsComponent />
   ) : (
     filtertedRestaurants.map((restaurant) => (
-      <CardComponent restraunt={restaurant} key={restaurant.id} />
+      <Link to={`/restaurant/${restaurant?.data?.id}`}>
+        <CardComponent restraunt={restaurant} key={restaurant?.data?.id} />
+      </Link>
     ))
   );
 
-const BodyComponent = () => {
+const SearchPageComponent = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [filtertedRestaurants, setFilteredRestaurants] = useState([]);
 
@@ -60,9 +71,31 @@ const BodyComponent = () => {
 const AppLayout = () => (
   <>
     <HeadingComponent />
-    <BodyComponent />
+    <Outlet />
   </>
 );
 
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    errorElement: <ErrorComponent />,
+    children: [
+      {
+        path: "/restaurant/:id",
+        element: <RestaurantComponent />,
+      },
+      {
+        path: "/search",
+        element: <SearchPageComponent />,
+      },
+    ],
+  },
+  {
+    path: "/about-us",
+    element: <AboutUs />,
+  },
+]);
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<AppLayout />);
+root.render(<RouterProvider router={appRouter} />);

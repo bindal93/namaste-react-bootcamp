@@ -1,7 +1,6 @@
 const CardComponent = ({ restraunt }) => {
-  //const { img, name, cusine, stars } = restraunt;
-
-  console.log(restraunt.data);
+  if (!restraunt?.data) return null;
+  console.log(restraunt?.data);
 
   const { name, cuisines, avgRating, cloudinaryImageId } = restraunt?.data;
   return (

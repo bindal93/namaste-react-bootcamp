@@ -1,5 +1,5 @@
 import { useState } from "react";
-import data from "./data.json";
+import data from "../utils/data.json";
 
 const searchRestaurants = (searchText, listOfRestaurants) => {
   // Logic for searching inside data
