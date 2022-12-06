@@ -1,11 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import CardComponent from "./CardComponent.js";
-import data from "./data.json";
-import { title } from "./constants.js";
-import SearchBar from "./SearchBar.js";
-import { useState } from "react";
-import { useEffect } from "react";
+import CardComponent from "./components/CardComponent.js";
+import data from "./utils/data.json";
+import { title } from "./utils/constants.js";
+import SearchBar from "./components/SearchBar.js";
+import { useState, useEffect } from "react";
+import NoResultsComponent from "./components/NoResultsComponent.js";
+import AboutUs from "./components/AboutUs.js";
+import ErrorComponent from "./components/ErrorComponent.js";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  Link,
+} from "react-router-dom";
+import RestaurantComponent from "./components/RestaurantComponent.js";
 
 const HeadingComponent = () => (
   <div id="title" className="title-class" tabIndex="1">
@@ -19,9 +28,11 @@ const CardContainer = ({ filtertedRestaurants }) =>
     <h1 key="sfds">No restaurant found!</h1>
   ) : (
     filtertedRestaurants.map((restaurant) => {
-      console.log(restaurant.data?.id);
+      //console.log(restaurant);
       return (
-        <CardComponent restraunt={restaurant} key={restaurant?.data?.id} />
+        <Link to={`/restaurant/${restaurant?.data?.id}`}>
+          <CardComponent restraunt={restaurant} key={restaurant?.data?.id} />
+        </Link>
       );
     })
   );
@@ -62,9 +73,31 @@ const BodyComponent = () => {
 const AppLayout = () => (
   <>
     <HeadingComponent />
-    {new Date().getHours() < 22 && <BodyComponent />}
+    <Outlet />
   </>
 );
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    errorElement: <ErrorComponent />,
+    children: [
+      {
+        path: "/restaurant/:id",
+        element: <RestaurantComponent />,
+      },
+      {
+        path: "/search",
+        element: <BodyComponent />,
+      },
+    ],
+  },
+  {
+    path: "/about-us",
+    element: <AboutUs />,
+  },
+]);
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<AppLayout />);
+root.render(<RouterProvider router={router} />);
