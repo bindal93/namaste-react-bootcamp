@@ -15,6 +15,7 @@ import {
   Link,
 } from "react-router-dom";
 import RestaurantComponent from "./components/RestaurantComponent.js";
+import ProfileComponent from "./components/ProfileComponent.js";
 
 const HeadingComponent = () => (
   <div id="title" className="title-class" tabIndex="1">
@@ -91,11 +92,17 @@ const router = createBrowserRouter([
         path: "/search",
         element: <BodyComponent />,
       },
+      {
+        path: "/about-us",
+        element: <AboutUs />,
+        children: [
+          {
+            path: "profile",
+            element: <ProfileComponent name={"Akshay Saini from props"} />,
+          },
+        ],
+      },
     ],
-  },
-  {
-    path: "/about-us",
-    element: <AboutUs />,
   },
 ]);
 
