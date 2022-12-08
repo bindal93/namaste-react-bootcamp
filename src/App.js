@@ -15,6 +15,7 @@ import {
 import AboutUs from "./components/AboutUs.js";
 import ErrorComponent from "./components/ErrorComponent.js";
 import RestaurantComponent from "./components/RestaurantComponent.js";
+import ProfileComponent from "./components/ProfileComponent.js";
 
 const HeadingComponent = () => (
   <div id="title" className="title-class" tabIndex="1">
@@ -71,7 +72,9 @@ const SearchPageComponent = () => {
 const AppLayout = () => (
   <>
     <HeadingComponent />
-    <Outlet />
+    <div className="body">
+      <Outlet />
+    </div>
   </>
 );
 
@@ -89,11 +92,22 @@ const appRouter = createBrowserRouter([
         path: "/search",
         element: <SearchPageComponent />,
       },
+      {
+        path: "/about-us",
+        element: <AboutUs />,
+        children: [
+          {
+            path: "profile",
+            element: (
+              <ProfileComponent
+                name={"Akshay Saini from the props"}
+                xyz={123}
+              />
+            ),
+          },
+        ],
+      },
     ],
-  },
-  {
-    path: "/about-us",
-    element: <AboutUs />,
   },
 ]);
 
