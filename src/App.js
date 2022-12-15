@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 //import AboutUs from "./components/AboutUs.js";
@@ -8,19 +8,28 @@ import ProfileComponent from "./components/ProfileComponent.js";
 //import SearchPageComponent from "./components/SearchPageComponent.js";
 import HeadingComponent from "./components/Header.js";
 
+import UserContext from "./components/UserContext.js";
+import ThemeContext from "./components/ThemeContext.js";
+
 const AboutUs = lazy(() => import("./components/AboutUs.js"));
 const SearchPageComponent = lazy(() =>
   import("./components/SearchPageComponent.js")
 );
 
-const AppLayout = () => (
-  <>
-    <HeadingComponent />
-    <div className="body">
-      <Outlet />
-    </div>
-  </>
-);
+const AppLayout = () => {
+  const [emailId, setEmailId] = useState("akshay@namastedev.com");
+  const [theme, setTheme] = useState("light");
+  return (
+    <ThemeContext.Provider value={{ theme: theme, setTheme: setTheme }}>
+      <UserContext.Provider value={{ email: emailId, setEmail: setEmailId }}>
+        <HeadingComponent />
+        <div className="body">
+          <Outlet />
+        </div>
+      </UserContext.Provider>
+    </ThemeContext.Provider>
+  );
+};
 
 const routesConfig = [
   {

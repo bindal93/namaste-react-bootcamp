@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import React from "react";
 import ProfileComponent from "./ProfileComponent";
+import UserContext from "./UserContext";
 
 class AboutUs extends React.Component {
   constructor(props) {
@@ -31,6 +32,22 @@ class AboutUs extends React.Component {
     console.log("About - render");
     return (
       <>
+        <UserContext.Consumer>
+          {({ email, setEmail }) => {
+            return (
+              <>
+                <h4>About US Context : {email}</h4>
+                <button
+                  onClick={() => {
+                    setEmail("aboutus@email.com");
+                  }}
+                >
+                  Update Email
+                </button>
+              </>
+            );
+          }}
+        </UserContext.Consumer>
         <h1>About Us Class Component</h1>
         <ProfileComponent userInfo={this.state.userInfo} />
       </>
