@@ -16,4 +16,9 @@
 
 .card-container {
     display: flex;
+    flex-wrap: wrap;
+}
+
+button {
+    max-height: 20px;;
 }

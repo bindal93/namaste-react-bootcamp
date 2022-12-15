@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import ReactDOM from "react-dom/client";
 import CardComponent from "./components/CardComponent.js";
 import data from "./utils/data.json";
@@ -14,7 +14,10 @@ import {
 import ErrorComponent from "./components/ErrorComponent.js";
 // import RestaurantComponent from "./components/RestaurantComponent.js";
 import ProfileComponent from "./components/ProfileComponent.js";
-// import AboutUs from "./components/AboutUs.js";
+//import SearchPageComponent from "./components/SearchPageComponent.js";
+import HeadingComponent from "./components/Header.js";
+import UserContext from "./components/UserContext.js";
+import ThemeContext from "./components/ThemeContext.js";
 
 const AboutUs = lazy(() => import("./components/AboutUs.js"));
 const RestaurantComponent = lazy(() =>
@@ -24,45 +27,20 @@ const SearchPageComponent = lazy(() =>
   import("./components/SearchPageComponent.js")
 );
 
-const HeadingComponent = () => (
-  <div id="title" className="title-class" tabIndex="1">
-    <Link to="/">
-      <h2>{title}</h2>
-    </Link>
-    <Link to="about-us">
-      <span>About Us</span>
-    </Link>
-    <Link to="search">
-      <span>Search</span>
-    </Link>
-  </div>
-);
-
-const NoResultsComponent = lazy(() =>
-  import("./components/NoResultsComponent.js")
-);
-
-// Dealing with Arrays, using a map
-export const CardContainer = ({ filtertedRestaurants }) =>
-  !filtertedRestaurants.length ? (
-    <h1 key="sfds">No restaurant found!</h1>
-  ) : (
-    filtertedRestaurants.map((restaurant) => (
-      <Link
-        key={restaurant?.data?.id}
-        to={`/restaurant/${restaurant?.data?.id}`}
-      >
-        <CardComponent restraunt={restaurant} key={restaurant?.data?.id} />
-      </Link>
-    ))
+const AppLayout = () => {
+  const [user, setUser] = useState("akshay");
+  const [theme, setTheme] = useState("light");
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <UserContext.Provider value={{ name: user, updateName: setUser }}>
+        <HeadingComponent />
+        <div className="body">
+          <Outlet />
+        </div>
+      </UserContext.Provider>
+    </ThemeContext.Provider>
   );
-
-const AppLayout = () => (
-  <>
-    <HeadingComponent />
-    <Outlet />
-  </>
-);
+};
 
 const router = createBrowserRouter([
   {

@@ -1,13 +1,6 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
-// const AboutUs = () => {
-//   return (
-//     <>
-//       <h1>About Us</h1>
-//       <h2>our Kool food ordering app</h2>
-//     </>
-//   );
-// };
+import ProfileComponent from "./ProfileComponent";
+import UserContext from "./UserContext";
 
 class AboutUs extends React.Component {
   constructor(props) {
@@ -27,9 +20,22 @@ class AboutUs extends React.Component {
     console.log("About - render");
     return (
       <>
-        <h1>About Us</h1>
-        <h2>our Kool food ordering app</h2>
-        <Outlet />
+        <h1>About Us Class Component</h1>
+        <UserContext.Consumer>
+          {(obj) => {
+            return (
+              <>
+                <span>{obj.name}</span>
+                <button
+                  onClick={() => obj.updateName(" Update from About Akshay")}
+                >
+                  Update from About
+                </button>
+              </>
+            );
+          }}
+        </UserContext.Consumer>
+        <ProfileComponent userInfo={this.state.userInfo} />
       </>
     );
   }

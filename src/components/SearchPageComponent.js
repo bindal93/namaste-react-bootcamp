@@ -1,6 +1,7 @@
+import { useEffect, useState, useContext } from "react";
 import SearchBar from "./SearchBar";
-import { CardContainer } from "../App";
-import { useState, useEffect } from "react";
+import CardContainer from "./CardContainer";
+import UserContext from "./UserContext";
 
 const SearchPageComponent = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
@@ -21,8 +22,13 @@ const SearchPageComponent = () => {
     //console.log(json?.data?.cards[2]?.data?.data?.cards);
   }
 
+  const obj = useContext(UserContext);
+
   return (
     <div className="card-container">
+      <button onClick={() => obj.updateName("Search Akshay update")}>
+        Update from Search : {obj.name}
+      </button>
       <SearchBar
         listOfRestaurants={listOfRestaurants}
         setFilteredRestaurants={setFilteredRestaurants}
