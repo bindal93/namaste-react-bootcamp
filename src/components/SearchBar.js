@@ -18,7 +18,7 @@ const SearchBar = ({ listOfRestaurants, setFilteredRestaurants, fn }) => {
   const cityList = useCities(stateName);
 
   return (
-    <div className="search">
+    <div className="m-5 p-5 bg-purple-50 rounded-lg">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -63,7 +63,9 @@ const SearchBar = ({ listOfRestaurants, setFilteredRestaurants, fn }) => {
             </option>
           ))}
         </select>
-        <button>Search</button>
+        <button className="bg-green-900 px-3 py-1 mx-2 text-white rounded-lg">
+          Search
+        </button>
       </form>
     </div>
   );

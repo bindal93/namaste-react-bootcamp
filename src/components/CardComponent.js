@@ -10,10 +10,7 @@ const CardComponent = ({ restraunt, stateName }) => {
   return (
     <div
       id="card"
-      className="card"
-      style={{
-        backgroundColor: theme === "light" ? "#fff" : "#000",
-      }}
+      className="m-3 p-3 w-52 bg-purple-50 rounded-lg border border-solid"
     >
       <img
         src={
@@ -21,7 +18,7 @@ const CardComponent = ({ restraunt, stateName }) => {
           cloudinaryImageId
         }
       />
-      <h2>{name}</h2>
+      <h2 className="font-bold">{name}</h2>
       <h3>{cuisines.join(", ")}</h3>
       <h4>{avgRating} stars</h4>
       <h5>{stateName}</h5>

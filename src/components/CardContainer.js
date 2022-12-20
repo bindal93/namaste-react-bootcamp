@@ -7,18 +7,20 @@ const CardContainer = ({ filtertedRestaurants, stateName }) =>
   !filtertedRestaurants.length ? (
     <NoResultsComponent />
   ) : (
-    filtertedRestaurants.map((restaurant) => (
-      <Link
-        key={restaurant?.data?.id}
-        to={`/restaurant/${restaurant?.data?.id}`}
-      >
-        <CardComponent
-          stateName={stateName}
-          restraunt={restaurant}
+    <div className="flex flex-wrap">
+      {filtertedRestaurants.map((restaurant) => (
+        <Link
           key={restaurant?.data?.id}
-        />
-      </Link>
-    ))
+          to={`/restaurant/${restaurant?.data?.id}`}
+        >
+          <CardComponent
+            stateName={stateName}
+            restraunt={restaurant}
+            key={restaurant?.data?.id}
+          />
+        </Link>
+      ))}
+    </div>
   );
 
 export default CardContainer;
