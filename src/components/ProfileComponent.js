@@ -53,14 +53,16 @@ class ProfileComponent extends Component {
   render() {
     console.log("Profile - render");
     // huge component 1000 state variables
-    const { login, company, avatar_url } = this.state.userInfo;
+    const { login, company, avatar_url, name } = this.state.userInfo;
     return (
-      <div>
-        <img src={avatar_url} />
-        <h3>Name: {this.props.name}</h3>
-        <h3>username: {login}</h3>
-        <h3>Company: {company}</h3>
-        <h3>XYZ: {this.props.xyz}</h3>
+      <div className="bg-gray-100  flex">
+        <img className="w-48 h-48 p-5 rounded-full" src={avatar_url} />
+        <div className="p-5">
+          <span className="font-bold">{name}</span>
+          <h3>{login}</h3>
+          <h3>{company}</h3>
+          <h3>{this.props.xyz}</h3>
+        </div>
       </div>
     );
   }

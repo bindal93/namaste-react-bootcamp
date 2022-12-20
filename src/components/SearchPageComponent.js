@@ -30,13 +30,6 @@ const SearchPageComponent = () => {
 
   return (
     <div className="card-container">
-      <h4>Search Component conText: {email}</h4>
-      <button onClick={() => setEmail("search@namastedev.com")}>
-        Update from Search Page
-      </button>
-      <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
-        Update Theme: {theme}
-      </button>
       <SearchBar
         listOfRestaurants={listOfRestaurants}
         setFilteredRestaurants={setFilteredRestaurants}

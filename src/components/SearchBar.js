@@ -18,7 +18,7 @@ const SearchBar = ({ listOfRestaurants, setFilteredRestaurants, fn }) => {
   const cityList = useCities(stateName);
 
   return (
-    <div className="search">
+    <div className="flex m-5 p-5 bg-pink-50 rounded-lg font-medium">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -29,6 +29,7 @@ const SearchBar = ({ listOfRestaurants, setFilteredRestaurants, fn }) => {
           console.log(filtertedRestaurants);
           setFilteredRestaurants(filtertedRestaurants);
         }}
+        className="flex justify-between"
       >
         <input
           id="restaurant"
@@ -63,7 +64,9 @@ const SearchBar = ({ listOfRestaurants, setFilteredRestaurants, fn }) => {
             </option>
           ))}
         </select>
-        <button>Search</button>
+        <button className="bg-green-900 rounded-xl text-white p-2 mx-4">
+          Search
+        </button>
       </form>
     </div>
   );
