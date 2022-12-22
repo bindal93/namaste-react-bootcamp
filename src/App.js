@@ -10,6 +10,9 @@ import HeadingComponent from "./components/Header.js";
 
 import UserContext from "./components/UserContext.js";
 import ThemeContext from "./components/ThemeContext.js";
+import { Provider } from "react-redux";
+import store from "./components/store.js";
+import Cart from "./components/Cart.js";
 
 const AboutUs = lazy(() => import("./components/AboutUs.js"));
 const SearchPageComponent = lazy(() =>
@@ -20,14 +23,16 @@ const AppLayout = () => {
   const [emailId, setEmailId] = useState("akshay@namastedev.com");
   const [theme, setTheme] = useState("light");
   return (
-    <ThemeContext.Provider value={{ theme: theme, setTheme: setTheme }}>
-      <UserContext.Provider value={{ email: emailId, setEmail: setEmailId }}>
-        <HeadingComponent />
-        <div className="body">
-          <Outlet />
-        </div>
-      </UserContext.Provider>
-    </ThemeContext.Provider>
+    <Provider store={store}>
+      <ThemeContext.Provider value={{ theme: theme, setTheme: setTheme }}>
+        <UserContext.Provider value={{ email: emailId, setEmail: setEmailId }}>
+          <HeadingComponent />
+          <div className="body">
+            <Outlet />
+          </div>
+        </UserContext.Provider>
+      </ThemeContext.Provider>
+    </Provider>
   );
 };
 
@@ -48,6 +53,10 @@ const routesConfig = [
             <SearchPageComponent />
           </Suspense>
         ),
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
       {
         path: "/about-us",
