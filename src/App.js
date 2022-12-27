@@ -12,6 +12,7 @@ import UserContext from "./components/UserContext.js";
 import ThemeContext from "./components/ThemeContext.js";
 import store from "./components/store.js";
 import { Provider } from "react-redux";
+import CartComponent from "./components/CartComponent.js";
 
 const AboutUs = lazy(() => import("./components/AboutUs.js"));
 const SearchPageComponent = lazy(() =>
@@ -52,6 +53,10 @@ const routesConfig = [
             <SearchPageComponent />
           </Suspense>
         ),
+      },
+      {
+        path: "/cart",
+        element: <CartComponent />,
       },
       {
         path: "/about-us",

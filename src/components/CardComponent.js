@@ -4,7 +4,6 @@ import ThemeContext from "./ThemeContext";
 const CardComponent = ({ restraunt, stateName }) => {
   const { theme } = useContext(ThemeContext);
   if (!restraunt?.data) return null;
-  console.log(restraunt?.data);
 
   const { name, cuisines, avgRating, cloudinaryImageId } = restraunt?.data;
   return (

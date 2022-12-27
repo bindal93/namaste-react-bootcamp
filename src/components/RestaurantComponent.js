@@ -2,12 +2,13 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CardComponent from "./CardComponent";
 import { useDispatch } from "react-redux";
-import { addItem } from "./cartSlice.js";
+import { addItem, clearCart } from "./cartSlice.js";
+import FoodItem from "./FoodItem.js";
 
 const RestaurantComponent = () => {
   const { id } = useParams();
 
-  const [resInfo, setResInfo] = useState([]);
+  const [resInfo, setResInfo] = useState({});
 
   useEffect(() => {
     fetchRestaurantInfo();
@@ -33,13 +34,38 @@ const RestaurantComponent = () => {
     );
   };
 
+  const clearCartHandler = () => {
+    dispatch(clearCart());
+  };
+
+  if (!resInfo?.data) return null;
+
   return (
-    <>
-      <CardComponent restraunt={resInfo} />
-      <button className="font-bold m-5 p-5 bg-green-50" onClick={addCartItem}>
-        Add Item to Cart
-      </button>
-    </>
+    <div className="flex">
+      <div>
+        <CardComponent restraunt={resInfo} />
+        <button className="font-bold m-5 p-5 bg-green-50" onClick={addCartItem}>
+          Add Item
+        </button>
+        <button
+          className="font-bold m-5 p-5 bg-red-50"
+          onClick={clearCartHandler}
+        >
+          Clear Cart
+        </button>
+      </div>
+      <div className="pl-10 pr-40">
+        <div className="mt-8">
+          <div className="flow-root">
+            <ul role="list" className="-my-6 divide-y divide-gray-200">
+              {Object.values(resInfo?.data?.menu?.items).map((item) => (
+                <FoodItem item={item} />
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
