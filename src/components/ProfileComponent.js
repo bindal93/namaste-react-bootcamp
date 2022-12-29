@@ -1,5 +1,4 @@
 import { Component } from "react";
-import { useEffect } from "react/cjs/react.production.min";
 
 const ProfileComponent2 = () => {
   const [email, setEmail] = useState("aksahbchd");

@@ -19,7 +19,7 @@ const SearchPageComponent = lazy(() =>
   import("./components/SearchPageComponent.js")
 );
 
-const AppLayout = () => {
+export const AppLayout = () => {
   const [emailId, setEmailId] = useState("akshay@namastedev.com");
   const [theme, setTheme] = useState("light");
   return (

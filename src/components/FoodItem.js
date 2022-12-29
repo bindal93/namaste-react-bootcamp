@@ -2,6 +2,8 @@ import { useDispatch } from "react-redux";
 import { addItem, deleteItem } from "./cartSlice.js";
 
 const FoodItem = ({ item, isCartPage }) => {
+  if (!item) return null;
+
   const { restId, name, price, description, category, cloudinaryImageId } =
     item;
 
@@ -34,7 +36,9 @@ const FoodItem = ({ item, isCartPage }) => {
           <p className="mt-1 text-sm text-gray-500">{description}</p>
         </div>
         <div className="flex flex-1 items-end justify-between text-sm">
-          <p className="text-gray-500">{category}</p>
+          <p className="text-gray-500" data-testid="category">
+            {category}
+          </p>
 
           <div className="flex">
             {isCartPage ? (
